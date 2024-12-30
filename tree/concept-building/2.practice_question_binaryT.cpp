@@ -109,10 +109,34 @@ pair<int, int> diameter2ndapproach(Node* root) {
 
     return {finalDiameter, finalHeight}; // Use brace-enclosed initialization
 }
+bool isIdentical(Node* root, Node* subroot) {
+    if (root == NULL && subroot == NULL) {
+        return true;
+    }
+    if (root == NULL || subroot == NULL) {
+        return false;
+    }
+    if (root->data != subroot->data) {
+        return false;
+    }
+
+    return isIdentical(root->left, subroot->left) && isIdentical(root->right, subroot->right);
+}
+
+bool issubTree(Node* root, Node* subroot) {
+    if (root == NULL) {
+        return false; // subroot cannot be a subtree of an empty tree
+    }
+    if (isIdentical(root, subroot)) {
+        return true;
+    }
+    return issubTree(root->left, subroot) || issubTree(root->right, subroot);
+}
 
 
 int main() {
-    vector<int> nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
+    // vector<int> nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
+    vector<int>nodes={2,3,-1,-1,4,-1,-1};
     int treeIndex = -1; // Initialize treeIndex for tracking position in vector
     Node* root = buildTree(nodes, treeIndex);
 
@@ -120,5 +144,9 @@ int main() {
     pair<int, int> result = diameter2ndapproach(root);
     cout << "Diameter: " << result.first << ", Height: " << result.second << endl;
 
+    Node* subroot=new Node(2);
+    subroot->left=new Node(3);
+    subroot->right=new Node(4);
+    cout<<issubTree(root,subroot)<<endl;
     return 0;
 }
