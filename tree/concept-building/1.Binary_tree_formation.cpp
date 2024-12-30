@@ -25,7 +25,7 @@ Node* buildTree(vector<int>& nodes, int& treeIndex) {
     return root;
 }
 
-// Pre-order traversal (DFS)
+// Pre-order traversal (DFS),trust recursion,hola
 void preOrderPrint(Node* root) {
     if (root == NULL) {
         return;
@@ -82,7 +82,7 @@ void levelOrderWithSeparateLine(Node* root) {
     }
     queue<Node*> q;
     q.push(root);
-    q.push(NULL); // Marker for end of level
+    q.push(NULL); // Marker for end of level(keep in mind)
 
     while (!q.empty()) {
         Node* temp = q.front();
