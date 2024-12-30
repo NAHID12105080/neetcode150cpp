@@ -85,7 +85,7 @@ int height(Node* root) {
     int rightHeight = height(root->right);
     return max(leftHeight, rightHeight) + 1;
 }
-//no. of nodes in thelongest path between 2nodes 
+//no. of nodes in the longest path between 2nodes 
 int diameterOfTree(Node* root){
     if(root==NULL){
         return 0;
@@ -96,13 +96,29 @@ int diameterOfTree(Node* root){
     return max(currentDiameter,max(LeftTreeDiameter,RightTreeDiameter));
 }
 
+pair<int, int> diameter2ndapproach(Node* root) {
+    if (root == NULL) {
+        return {0, 0}; // Use brace-enclosed initialization
+    }
+    pair<int, int> leftTree = diameter2ndapproach(root->left);
+    pair<int, int> rightTree = diameter2ndapproach(root->right);
+
+    int currentDiameter = leftTree.second + rightTree.second + 1;
+    int finalDiameter = max(currentDiameter, max(leftTree.first, rightTree.first));
+    int finalHeight = max(leftTree.second, rightTree.second) + 1;
+
+    return {finalDiameter, finalHeight}; // Use brace-enclosed initialization
+}
+
 
 int main() {
     vector<int> nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
     int treeIndex = -1; // Initialize treeIndex for tracking position in vector
     Node* root = buildTree(nodes, treeIndex);
 
-    cout<<"diameterOFTree :"<<diameterOfTree(root)<<endl;    
+    // cout<<"diameterOFTree :"<<diameterOfTree(root)<<endl;    
+    pair<int, int> result = diameter2ndapproach(root);
+    cout << "Diameter: " << result.first << ", Height: " << result.second << endl;
 
     return 0;
 }
