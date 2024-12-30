@@ -53,21 +53,51 @@ void printUsingBFS(Node* root){
     }
 }
 
-// void printInNewLineBFS(Node* root){
-//     queue<Node*>q;
-//     q.push(root);
+void levelOrderWithSeparateLine(Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    queue<Node*> q;
+    q.push(root);
+    q.push(NULL); // Marker for end of level(keep in mind)
 
-//     while(!q.empty()){
-//         Node* te
-//     }
+    while (!q.empty()) {
+        Node* temp = q.front();
+        q.pop();
 
-// }
+        if (temp == NULL) {
+            cout << endl;
+            if (q.empty()) {
+                break;
+            }
+            q.push(NULL);
+        } else {
+            cout << temp->data << " ";
+            if (temp->left != NULL) {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL) {
+                q.push(temp->right);
+            }
+        }
+    }
+}
+
+int diameterOfTree(Node* root){
+    if(root==NULL) {
+        return 0;
+    }
+
+    
+
+}
 
 
 int main(){
     vector<int> nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
     int treeIndex = -1;
     Node* root = buildTree(nodes, treeIndex);
-    printUsingBFS(root);
+    // printUsingBFS(root);
+    levelOrderWithSeparateLine(root);
     return 0;
 }
