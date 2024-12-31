@@ -128,6 +128,25 @@ int LowestCommonAncestor(Node* root, int n1, int n2) {
     return lca;
 }
 
+//Better approach with reduced space complexity
+//approach 2 as the lca of 2 nodes is the first node in the same subtree of the 2 nodes
+
+Node* LCA2(Node* root , int n1, int n2){
+    if(root == NULL){
+        return NULL;
+    }
+    if(root->data == n1 || root->data == n2){
+        return root;
+    }
+    Node* left = LCA2(root->left,n1,n2);
+    Node* right = LCA2(root->right,n1,n2);
+    if(left != NULL && right != NULL){
+        return root;
+    }
+    return left==NULL?right:left;
+    
+}
+
 signed main() {
 vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 10, -1, -1, 11, -1, -1};
 
@@ -139,6 +158,7 @@ vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 
     // printKthLevelNodes(root,4);
     // KthLevelNodes(root,4);
 
-    cout<<LowestCommonAncestor(root,10,11);
+    // cout<<LowestCommonAncestor(root,10,11);
+    cout<<LCA2(root,10,11)->data;
   return 0;
 }
