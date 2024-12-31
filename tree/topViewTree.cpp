@@ -15,7 +15,7 @@ class Node{
 
 Node* buildTree(vector<int>&nodes, int &index){
     index++;
-    if(nodes.size()<=index or index==-1){
+    if(nodes.size()<=index || nodes[index]==-1){//careFul its nodes[index]==-1
         return NULL;
     }
     Node* root=new Node(nodes[index]);
@@ -68,13 +68,46 @@ void Topview(Node* root){
     }
 }
 
+void kthNodePrintHelper(Node* root, int k, int curLevel) {
+    if (root == NULL) {
+        return;
+    }
+    if (curLevel == k) {
+        cout << root->data << " ";
+        return; // Stop further traversal for this branch
+    }
+    kthNodePrintHelper(root->left, k, curLevel + 1);
+    kthNodePrintHelper(root->right, k, curLevel + 1);
+}
+
+void printKthLevelNodes(Node* root, int k) {
+    kthNodePrintHelper(root, k, 1);
+    cout << endl;
+}
+//2nd approach
+void KthLevelNodes(Node* root, int k) {
+    if (root == NULL) {
+        return;
+    }
+    if (k == 1) {
+        cout << root->data << " ";
+        return;
+    }
+    KthLevelNodes(root->left, k - 1);
+    KthLevelNodes(root->right, k - 1);
+}
+
+
+
 signed main() {
-    vector<int> nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
+vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 10, -1, -1, 11, -1, -1};
 
     int index=-1;
     Node* root=buildTree(nodes,index);
     // levelOrder(root);
     // cout<<endl;
-    Topview(root);
+    // Topview(root);
+    printKthLevelNodes(root,4);
+    KthLevelNodes(root,4);
   return 0;
 }
