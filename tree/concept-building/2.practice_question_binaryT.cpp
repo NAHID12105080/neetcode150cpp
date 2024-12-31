@@ -53,7 +53,7 @@ void levelOrderWithSeparateLine(Node* root) {
     }
     queue<Node*> q;
     q.push(root);
-    q.push(NULL); // Marker for end of level(keep in mind)
+    q.push(NULL); // Marker for end of level
 
     while (!q.empty()) {
         Node* temp = q.front();
@@ -85,15 +85,16 @@ int height(Node* root) {
     int rightHeight = height(root->right);
     return max(leftHeight, rightHeight) + 1;
 }
-//no. of nodes in the longest path between 2nodes 
-int diameterOfTree(Node* root){
-    if(root==NULL){
+
+// Number of nodes in the longest path between two nodes
+int diameterOfTree(Node* root) {
+    if (root == NULL) {
         return 0;
     }
-    int currentDiameter=height(root->left)+height(root->right)+1;
-    int LeftTreeDiameter=diameterOfTree(root->left);
-    int RightTreeDiameter=diameterOfTree(root->right);
-    return max(currentDiameter,max(LeftTreeDiameter,RightTreeDiameter));
+    int currentDiameter = height(root->left) + height(root->right) + 1;
+    int leftTreeDiameter = diameterOfTree(root->left);
+    int rightTreeDiameter = diameterOfTree(root->right);
+    return max(currentDiameter, max(leftTreeDiameter, rightTreeDiameter));
 }
 
 pair<int, int> diameter2ndapproach(Node* root) {
@@ -141,10 +142,12 @@ int main() {
     Node* root = buildTree(nodes, treeIndex);
 
     // cout<<"diameterOFTree :"<<diameterOfTree(root)<<endl;    
-    pair<int, int> result = diameter2ndapproach(root);
-    cout << "Diameter: " << result.first << ", Height: " << result.second << endl;
+    // pair<int, int> result = diameter2ndapproach(root);
+    // cout << "Diameter: " << result.first << ", Height: " << result.second << endl;
 
-    Node* subroot=new Node(2);
+    levelOrderWithSeparateLine(root);
+
+    Node* subroot=new Node(2);//* becareful it's not = not ==
     subroot->left=new Node(3);
     subroot->right=new Node(4);
     cout<<issubTree(root,subroot)<<endl;
