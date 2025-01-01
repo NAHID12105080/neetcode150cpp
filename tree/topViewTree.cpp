@@ -14,7 +14,7 @@ class Node{
 };
 //         1
 //        / \
-//       2   3
+//       2   3validVal+1
 //      / \    \
 //     4   5    6
 //    / \   \   / \
@@ -197,7 +197,7 @@ int distance(Node* root, int n){
     if(right!=-1){
         return right+1;
     }
-    return -1;
+    return -1;//if not found
 }
 
 int minimumDistanceBetweenNodes(Node* root, int n1, int n2){
@@ -208,6 +208,7 @@ int minimumDistanceBetweenNodes(Node* root, int n1, int n2){
    
 }
 
+//kth ancestor of a node in a binary tree
 //         1
 //        / \
 //       2   3
@@ -216,8 +217,82 @@ int minimumDistanceBetweenNodes(Node* root, int n1, int n2){
 //    / \   \   / \
 //   7   8   9 10  11
 
+int kthAncestor(Node* root, int n, int k){
+    if(root==NULL){
+        return -1;
+    }
+    if(root->data==n){
+        return 0;
+    }
+    int leftDist=kthAncestor(root->left,n,k);
+    int rightDist=kthAncestor(root->right,n,k);
+    if(leftDist==-1 && rightDist==-1){
+        return -1;
+    }
+
+    int validVal=leftDist==-1?rightDist:leftDist;
+
+    if(validVal+1==k){
+        cout<<root->data<<" ";//printing the kth ancestor********
+    }
+    return validVal+1;//returning the distance of the node from the root*****(keep in mind)
+}
+
+int TreeTransformWithSum(Node* root){
+    if(root==NULL){
+        return 0;
+    }
+    if(root->left==NULL && root->right==NULL){
+        return root->data;
+    }
+    int leftSum=TreeTransformWithSum(root->left);
+    int rightSum=TreeTransformWithSum(root->right);
+    int temp=root->data;
+    root->data=leftSum+rightSum;
+    return temp+root->data;
+}
+
+// Level-order traversal with levels printed on separate lines
+void levelOrderWithSeparateLine(Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    queue<Node*> q;
+    q.push(root);
+    q.push(NULL); // Marker for end of level
+
+    while (!q.empty()) {
+        Node* temp = q.front();
+        q.pop();
+
+        if (temp == NULL) {
+            cout << endl;
+            if (!q.empty()) {
+                q.push(NULL); // Add marker for the next level
+            }
+        } else {
+            cout << temp->data << " ";
+            if (temp->left != NULL) {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL) {
+                q.push(temp->right);
+            }
+        }
+    }
+}
+
+
+
 signed main() {
 vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 10, -1, -1, 11, -1, -1};
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
     int index=-1;
     Node* root=buildTree(nodes,index);
@@ -230,7 +305,13 @@ vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 
 
     // cout<<LowestCommonAncestor(root,10,11);
 
-    cout<<minimumDistanceBetweenNodes(root,10,11);
     // cout<<LCA2(root,10,11)->data;
+
+    // cout<<minimumDistanceBetweenNodes(root,10,11);
+
+    // kthAncestor(root,11,1);
+
+    TreeTransformWithSum(root);
+    levelOrderWithSeparateLine(root);
   return 0;
 }

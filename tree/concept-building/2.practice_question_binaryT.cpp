@@ -147,9 +147,9 @@ int main() {
 
     levelOrderWithSeparateLine(root);
 
-    Node* subroot=new Node(2);//* becareful it's not = not ==
-    subroot->left=new Node(3);
-    subroot->right=new Node(4);
-    cout<<issubTree(root,subroot)<<endl;
+    // Node* subroot=new Node(2);//* becareful it's = not ==
+    // subroot->left=new Node(3);
+    // subroot->right=new Node(4);
+    // cout<<issubTree(root,subroot)<<endl;
     return 0;
 }
