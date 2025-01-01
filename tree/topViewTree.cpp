@@ -12,6 +12,13 @@ class Node{
     }
 
 };
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
 Node* buildTree(vector<int>&nodes, int &index){
     index++;
@@ -42,6 +49,13 @@ void levelOrder(Node* root) {
         }
     }
 }
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
 
 void Topview(Node* root){
@@ -96,6 +110,13 @@ void KthLevelNodes(Node* root, int k) {
     KthLevelNodes(root->left, k - 1);
     KthLevelNodes(root->right, k - 1);
 }
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
 bool findPath(Node* root, int n, vector<int>& path) {
     if (root == NULL) {
@@ -111,6 +132,13 @@ bool findPath(Node* root, int n, vector<int>& path) {
     path.pop_back();
     return false;
 }
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
 int LowestCommonAncestor(Node* root, int n1, int n2) {
     vector<int> path1, path2;
@@ -130,6 +158,13 @@ int LowestCommonAncestor(Node* root, int n1, int n2) {
 
 //Better approach with reduced space complexity
 //approach 2 as the lca of 2 nodes is the first node in the same subtree of the 2 nodes
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
 Node* LCA2(Node* root , int n1, int n2){
     if(root == NULL){
@@ -146,12 +181,47 @@ Node* LCA2(Node* root , int n1, int n2){
     return left==NULL?right:left;
     
 }
+// minimum distance between 2 nodes in a binary tree
+int distance(Node* root, int n){
+    if(root==NULL){
+        return -1;
+    }
+    if(root->data==n){
+        return 0;
+    }
+    int left=distance(root->left,n);
+    int right=distance(root->right,n);
+    if(left!=-1){
+        return left+1;
+    }
+    if(right!=-1){
+        return right+1;
+    }
+    return -1;
+}
+
+int minimumDistanceBetweenNodes(Node* root, int n1, int n2){
+    Node* lca=LCA2(root,n1,n2);
+    int d1=distance(lca,n1);
+    int d2=distance(lca,n2);
+    return d1+d2;
+   
+}
+
+//         1
+//        / \
+//       2   3
+//      / \    \
+//     4   5    6
+//    / \   \   / \
+//   7   8   9 10  11
 
 signed main() {
 vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 10, -1, -1, 11, -1, -1};
 
     int index=-1;
     Node* root=buildTree(nodes,index);
+
     // levelOrder(root);
     // cout<<endl;
     // Topview(root);
@@ -159,6 +229,8 @@ vector<int> nodes = {1, 2, 4, 7, -1, -1, 8, -1, -1, 5, -1, 9, -1, -1, 3, -1, 6, 
     // KthLevelNodes(root,4);
 
     // cout<<LowestCommonAncestor(root,10,11);
-    cout<<LCA2(root,10,11)->data;
+
+    cout<<minimumDistanceBetweenNodes(root,10,11);
+    // cout<<LCA2(root,10,11)->data;
   return 0;
 }
