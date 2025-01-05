@@ -154,11 +154,27 @@ void pathRootToleaf(Node* root){
 
 }
 
+bool isValidBSTHelper(Node* root, Node* minNode, Node* maxNode) {
+    if (root == NULL) {
+        return true;
+    }
+    if ((minNode != NULL && root->data <= minNode->data) || (maxNode != NULL && root->data >= maxNode->data)) {
+        return false;
+    }
+    return isValidBSTHelper(root->left, minNode, root) && isValidBSTHelper(root->right, root, maxNode);
+}
+
+bool isValidBST(Node* root) {
+    return isValidBSTHelper(root, NULL, NULL);
+}
+
 
 
 int main(){
-    int arr[]={11,1,2,3,4,5};
-    Node* root=buildBST(arr,6);
+    int arr[] = {8, 3, 10, 1, 6, 4, 7, 14, 13};
+
+
+    Node* root=buildBST(arr,9);
     // inorder(root);
     // cout<<endl;
     // cout<<searchBST(root,5)<<endl;
@@ -175,7 +191,9 @@ int main(){
     // printGivenRange(root,2,4);
 
 
-    pathRootToleaf(root);
+    // pathRootToleaf(root);
+
+    isValidBST(root)?cout<<"Yes":cout<<"No";
 
 
 
