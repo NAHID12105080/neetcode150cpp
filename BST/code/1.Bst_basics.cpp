@@ -1,4 +1,5 @@
-#include<iostream>
+#include<bits/stdc++.h>
+
 using namespace std;
 
 class Node{
@@ -121,6 +122,40 @@ void printGivenRange(Node* root, int start, int end){
 }
 
 
+//print all path from root to leaf
+void printPath(vector<int> path){
+    for(auto i:path){
+        cout<<i<<" ";
+    }
+    cout<<endl;
+}
+
+void printMainHelper(Node* root, vector<int>&path)
+{
+    if(root==NULL){
+        return;
+    }
+    path.push_back(root->data);
+   
+    if(root->left==NULL && root->right==NULL){
+        printPath(path);
+        path.pop_back();
+        return;
+    }
+    printMainHelper(root->left,path);
+    printMainHelper(root->right,path);
+    path.pop_back();
+}
+
+void pathRootToleaf(Node* root){
+    vector<int>path;
+
+    printMainHelper(root, path);
+
+}
+
+
+
 int main(){
     int arr[]={11,1,2,3,4,5};
     Node* root=buildBST(arr,6);
@@ -135,9 +170,12 @@ int main(){
     // inorder(root);
 
     //-------
-    inorder(root);
-    cout<<endl;
-    printGivenRange(root,2,4);
+    // inorder(root);
+    // cout<<endl;
+    // printGivenRange(root,2,4);
+
+
+    pathRootToleaf(root);
 
 
 
