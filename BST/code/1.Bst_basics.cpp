@@ -93,11 +93,31 @@ Node* deleteNode(Node* root, int val){
         else{
             Node* IS=InorderSuccessor(root->right);
             root->data=IS->data;
-            root->right=deleteNode(root->right,IS->data);
+            root->right=deleteNode(root->right,IS->data);// as inorder successor lies in right subtree always and it's the left most child of the it, has 0,1 child max , as left child must be NULL
             return root;
         }
     }
     return root;
+}
+
+void printGivenRange(Node* root, int start, int end){
+   if(root==NULL){
+    return;
+   }
+
+    if(start<=root->data && root->data<=end){
+        cout<<root->data<<" ";
+        printGivenRange(root->left,start,end);
+        printGivenRange(root->right,start,end);
+    }
+
+    else if(root->data<start){
+        printGivenRange(root->right,start,end);
+
+    }
+    else{
+        printGivenRange(root->left,start,end);
+    }
 }
 
 
@@ -109,10 +129,16 @@ int main(){
     // cout<<searchBST(root,5)<<endl;
 
 
+    // inorder(root);
+    // deleteNode(root,5);
+    // cout<<endl;
+    // inorder(root);
+
+    //-------
     inorder(root);
-    deleteNode(root,5);
     cout<<endl;
-    inorder(root);
+    printGivenRange(root,2,4);
+
 
 
     return 0;
