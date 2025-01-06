@@ -183,21 +183,45 @@ bool isValidBST(Node* root) {
     //    / \      /
     //   4   7    13
 
-Node* buildBSTsortedArray(int arr[], int start, int end){
+Node* buildBSTsortedArray(int arr[], int start, int end) {
+    if (start > end) {return nullptr;}
+    int mid = start + (end - start) / 2;
+    Node* root = new Node(arr[mid]);
+
+    root->left = buildBSTsortedArray(arr, start, mid - 1);
+    root->right = buildBSTsortedArray(arr, mid + 1, end);
+    return root;
+}
+
+
+Node* buildBSTsortedVec(vector<int>arr, int start, int end){
     if(start>end){
         return NULL;
     }
     int mid=start+(end-start)/2;
     Node* root=new Node(arr[mid]);
-    root->left=buildBSTsortedArray(arr,start,mid-1);
-    root->right=buildBSTsortedArray(arr,mid+1,end);
+    root->left=buildBSTsortedVec(arr,start,mid-1);
+    root->right=buildBSTsortedVec(arr,mid+1,end);
     return root;
 }
 
+void getInorder(Node* root,vector<int>arr){
+    if(root==NULL){
+        return;
+    }
+    getInorder(root->left,arr);
+    arr.push_back(root->data);
+    getInorder(root->right,arr);
+}
 
+Node* balanceBST(Node* root){
+    vector<int>arr;
+    getInorder(root,arr);
+    return buildBSTsortedVec(arr,0,arr.size()-1);
+}
 
 int main(){
-    int arr[] = {8, 3, 10, 1, 6, 4, 7, 14, 13};
+    // int arr[] = {8, 3, 10, 1, 6, 4, 7, 14, 13};
     //       8
     //    /     \
     //   3       10
@@ -207,7 +231,7 @@ int main(){
     //   4   7    13
 
 
-    Node* root=buildBST(arr,9);
+    // Node* root=buildBST(arr,9);
     // inorder(root);
     // cout<<endl;
     // cout<<searchBST(root,5)<<endl;
@@ -228,8 +252,23 @@ int main(){
 
     // isValidBST(root)?cout<<"Yes":cout<<"No";
 
-    buildBSTsortedArray(arr,0,8);
+    // buildBSTsortedArray(arr,0,8);
+    // inorder(root);
+
+    Node* root=new Node(6);
+    root->left=new Node(5);
+    root->left->left=new Node(4);
+    root->left->left->left=new Node(3);
+
+    root->right=new Node(7);
+    root->right->right=new Node(8);
+    root->right->right->right=new Node(9);
+
+    root=balanceBST(root);
+
+
     inorder(root);
+    cout<<endl;
 
     return 0;
 }
