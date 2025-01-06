@@ -60,6 +60,13 @@ bool searchBST(Node* root, int key){
     
 }
 
+    //       8
+    //    /     \
+    //   3       10
+    //  / \        \
+    // 1   6        14
+    //    / \      /
+    //   4   7    13
 
 Node* InorderSuccessor(Node* root){
     while(root->left!=NULL){
@@ -168,10 +175,36 @@ bool isValidBST(Node* root) {
     return isValidBSTHelper(root, NULL, NULL);
 }
 
+    //       8
+    //    /     \
+    //   3       10
+    //  / \        \
+    // 1   6        14
+    //    / \      /
+    //   4   7    13
+
+Node* buildBSTsortedArray(int arr[], int start, int end){
+    if(start>end){
+        return NULL;
+    }
+    int mid=start+(end-start)/2;
+    Node* root=new Node(arr[mid]);
+    root->left=buildBSTsortedArray(arr,start,mid-1);
+    root->right=buildBSTsortedArray(arr,mid+1,end);
+    return root;
+}
+
 
 
 int main(){
     int arr[] = {8, 3, 10, 1, 6, 4, 7, 14, 13};
+    //       8
+    //    /     \
+    //   3       10
+    //  / \        \
+    // 1   6        14
+    //    / \      /
+    //   4   7    13
 
 
     Node* root=buildBST(arr,9);
@@ -193,9 +226,10 @@ int main(){
 
     // pathRootToleaf(root);
 
-    isValidBST(root)?cout<<"Yes":cout<<"No";
+    // isValidBST(root)?cout<<"Yes":cout<<"No";
 
-
+    buildBSTsortedArray(arr,0,8);
+    inorder(root);
 
     return 0;
 }
