@@ -21,9 +21,7 @@ class Heap{
         }
     }
 
-
-
-    void pop(){
+     void pop(){
         int n=v.size();
         swap(v[0],v[n-1]);
         v.pop_back();
@@ -54,4 +52,35 @@ class Heap{
     bool empty(){
         return v.size()==0;
     }
+    void printHeap() {
+        for (int i = 0; i < v.size(); ++i) {
+            cout << v[i] << " ";
+        }
+        cout << endl;
+    }
+
 };
+
+int main() {
+    Heap h;
+    h.push(10);
+    h.push(20);
+    h.push(5);
+    h.push(30);
+
+    cout << "Top element: " << h.top() << endl;
+    h.printHeap();
+    h.pop();
+    cout << "Top element after pop: " << h.top() << endl;
+
+    h.pop();
+    cout << "Top element after another pop: " << h.top() << endl; 
+
+    cout << "Is heap empty? " << (h.empty() ? "Yes" : "No") << endl; 
+
+    h.pop();
+    h.pop();
+    cout << "Is heap empty after popping all elements? " << (h.empty() ? "Yes" : "No") << endl; // Should print Yes
+
+    return 0;
+}
