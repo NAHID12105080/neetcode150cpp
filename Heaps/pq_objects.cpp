@@ -30,4 +30,6 @@ int main(){
         cout<<pq.top().name<<" "<<pq.top().marks<<endl;
         pq.pop();
     }
+
+    return 0;
 }
