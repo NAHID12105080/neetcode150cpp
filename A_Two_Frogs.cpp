@@ -17,7 +17,7 @@ signed main() {
     {    
       int n,a,b;
       cin>>n>>a>>b;
-      if((a^b)&1) cout<<"NO"<<endl;
+      if((a^b)&1) cout<<"NO"<<endl;//checking different parity
       else cout<<"YES"<<endl;
     }
 }
