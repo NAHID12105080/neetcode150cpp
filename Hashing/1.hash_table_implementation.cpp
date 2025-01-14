@@ -75,10 +75,68 @@ class HashTable{
     current_size++;
 
     //rehashing
+    //if load increases on the main table then time complexity will increase
     double lamda=current_size/(1.0*total_size);
     if(lamda>0.7){
         rehash();
     }
+    }
+
+    int* search(string key){
+        int index=hashfunction(key);
+        Node* temp=table[index];
+        while(temp!=NULL){
+            if(temp->key==key){
+                return &(temp->value);
+            }
+            temp=temp->next;
+        }
+        return NULL;
+    }
+
+    bool isExist(string key){
+        int index=hashfunction(key);
+        Node* temp=table[index];
+        while(temp!=NULL){
+            if(temp->key==key){
+                return true;
+            }
+            temp=temp->next;
+        }
+        return false;
+    }
+
+    void erase(string key){
+        int index=hashfunction(key);
+        Node* temp=table[index];
+        Node* prev=NULL;
+        while(temp!=NULL){
+            if(temp->key==key){
+                if(prev==NULL){
+                    table[index]=temp->next;
+                }
+                else{
+                    prev->next=temp->next;
+                }
+                temp->next=NULL;
+                delete temp;
+                return;
+            }
+            prev=temp;
+            temp=temp->next;
+        }
+    }
+
+    void print(){
+        for(int i=0;i<total_size;i++){
+            Node* temp=table[i];
+            cout<<"Bucket "<<i<<"->";
+            while(temp!=NULL){
+                cout<<temp->key<<" ";
+                temp=temp->next;
+            }
+            cout<<endl;
+        }
     }
 };
 
@@ -86,7 +144,38 @@ class HashTable{
 
 
 int main() {
-    Node* n = new Node("abc", 1);
-    cout << n->key << " " << n->value << endl;
+  
+
+    HashTable h(7);
+    h.insert("Mango", 100);
+    h.insert("Apple", 120);
+    h.insert("Banana", 20);
+    h.insert("Guava", 30);
+    h.insert("Pineapple", 40);
+    h.insert("Orange", 50);
+    h.insert("Kiwi", 60);
+
+  
+    h.print();
+
+    int* price = h.search("Banana");
+    if (price != NULL) {
+        cout << "Price of Banana is " << *price << endl;
+    } else {
+        cout << "Banana not found" << endl;
+    }
+
+    h.erase("Banana");
+
+    if (h.isExist("Banana")) {
+        cout << "Banana is present" << endl;
+    } else {
+        cout << "Banana is not present" << endl;
+    }
+
+
+
+
+
     return 0;
 }
