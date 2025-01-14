@@ -13,17 +13,17 @@ class Node {
     }
 
     ~Node() {
-        if (next != NULL) {
+        if (next != NULL) {//deleting the next pointer recursively, atlast deleting the current node
             delete next;
         }
     }
 };
 
-//Hashtable is effective to store unstructured data, where order is not important.
+//Hashtable is effective to store unstructured data, where order is not important. unordered_map,unordered_set are the inbuilt hash table in c++. gives time complexity of O(1) for insertion,deletion and searching in average case.
 class HashTable{
     int total_size;
     int current_size;//will be used in rehashing
-    Node** table;
+    Node** table;//pointer to the array of pointers
 
     int hashfunction(string key) {
         int idx = 0;
@@ -112,17 +112,17 @@ class HashTable{
         Node* prev=NULL;
         while(temp!=NULL){
             if(temp->key==key){
-                if(prev==NULL){
+                if(prev==NULL){//case1:if the key is at the head of the linked list
                     table[index]=temp->next;
                 }
-                else{
+                else{//case2:if the key is at the middle or end of the linked list
                     prev->next=temp->next;
                 }
                 temp->next=NULL;
                 delete temp;
                 return;
             }
-            prev=temp;
+            prev=temp;//updating the prev pointer
             temp=temp->next;
         }
     }
@@ -140,12 +140,7 @@ class HashTable{
     }
 };
 
-
-
-
 int main() {
-  
-
     HashTable h(7);
     h.insert("Mango", 100);
     h.insert("Apple", 120);
@@ -173,9 +168,5 @@ int main() {
         cout << "Banana is not present" << endl;
     }
 
-
-
-
-
-    return 0;
+ return 0;
 }
