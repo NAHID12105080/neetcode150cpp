@@ -20,6 +20,8 @@ class Trie{
         root=new Node();
         root->freq=-1;
     }
+
+    //rewrite the insert function for this problem only
     void insert(string s){
         Node* temp=root;
 
