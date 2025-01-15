@@ -16,8 +16,6 @@ class Node {
 class Trie{
     public:
     Node* root;
-
-    public:
     Trie() {
         root = new Node('\0');
     }
@@ -27,7 +25,7 @@ class Trie{
         for (int i = 0; i < s.length(); i++) {
             char ch = s[i];
             if (temp->children.count(ch)) {//if the character is already present in the children of the node
-                temp = temp->children[ch];
+                temp = temp->children[ch];//move temp to the children of the node
             } else {
                 Node* n = new Node(ch);
                 temp->children[ch] = n;
@@ -51,7 +49,7 @@ class Trie{
     }
 };
 
-
+//problems code start from here
 bool helper(Trie &trie, string key){
     if(key.length()==0){
         return true;
@@ -75,6 +73,8 @@ bool wordBreak(string s, vector<string>& dict){
     return helper(trie,s);
 
 }
+
+
 
 int main(){
    string s="ilove";
