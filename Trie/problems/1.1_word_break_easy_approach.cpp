@@ -51,33 +51,30 @@ class Trie{
     }
 };
 
-//Time complexity: O(n^2). 2nd approach more advanced one
-bool wordBreak(string s, vector<string>& wordDict) {
-    Trie t;
-    for (string word : wordDict) {
-        t.insert(word);
+
+bool helper(Trie &trie, string key){
+    if(key.length()==0){
+        return true;
     }
-    int n = s.length();
-    vector<bool> dp(n + 1, false);
-    dp[n] = true;
-    for (int i = n - 1; i >= 0; i--) {
-        Node* temp = t.root;
-        for (int j = i; j < n; j++) {
-            char ch = s[j];
-            if (temp->children.count(ch) == 0) {
-                break;
-            } else {
-                temp = temp->children[ch];
-                if (temp->terminal && dp[j + 1]) {
-                    dp[i] = true;
-                    break;
-                }
-            }
+
+    for(int i=0;i<key.size();i++){
+        string left=key.substr(0,i+1);
+        string right=key.substr(i+1);
+        if(trie.find(left) && helper(trie,right)){
+            return true;
         }
     }
-    return dp[0];
 }
 
+bool wordBreak(string s, vector<string>& dict){
+    Trie trie;
+    for(int i=0;i<dict.size();i++){
+        trie.insert(dict[i]);
+    }
+
+    return helper(trie,s);
+
+}
 
 int main(){
    string s="ilove";
