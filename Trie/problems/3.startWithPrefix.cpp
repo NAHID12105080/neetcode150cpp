@@ -39,6 +39,8 @@ class Trie{
 };
 
 //problems code start from here
+//similar to the find function of the trie
+//just atlast return true instead of temp->terminal
 bool startsWithPrefix(vector<string>&words,string prefix){
     Trie t;
     for(string word:words){
