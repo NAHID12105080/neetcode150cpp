@@ -54,6 +54,48 @@ class Graph{
     cout<<endl;
     }
 
+    void dfsHelper(int u, vector<bool> &vis){
+        vis[u]=true;
+        cout<<u<<" ";
+
+        list<int> neighbors=l[u];
+        for(int v:neighbors){
+            if(!vis[v]){
+                dfsHelper(v,vis);
+            }
+        }
+    }
+
+    void dfs(){
+        vector<bool> vis(7,false);
+        dfsHelper(0,vis);
+        cout<<endl;
+    }
+
+    bool pathHelper(int src,int desti,vector<bool>&vis){
+        if(src==desti){
+            return true;
+        }
+
+        vis[src]=true;
+        list<int>neighbors=l[src];
+
+        for(int v:neighbors){
+            if(!vis[v]){
+                if(pathHelper(v,desti,vis)){
+                    return true;
+                }
+            }
+        }
+
+
+    }    
+
+    bool hasPath(int src,int desti){
+        vector<bool>vis(V,false);
+        return pathHelper(src,desti,vis);
+    }
+
 };
 
 int main(){
@@ -66,5 +108,7 @@ int main(){
 
     graph.print();
     graph.bfs();
+    graph.dfs();
+    cout<< graph.hasPath(0,2);
     return 0;
 }
