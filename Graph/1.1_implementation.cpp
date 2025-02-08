@@ -2,6 +2,7 @@
 #include<vector>
 #include<list>
 #include<queue>
+#include<string>
 using namespace std;
 
 class Graph{
@@ -30,11 +31,10 @@ class Graph{
 
     }
 
-    void bfs(){
+    void bfsHelper(int start, vector<bool>&visisted){
         queue<int>q;
-        vector<bool>visisted(V,false);
-        q.push(0);
-        visisted[0]=true;
+        q.push(start);
+        visisted[start]=true;
 
         while (q.size()>0)
         {
@@ -54,6 +54,17 @@ class Graph{
     cout<<endl;
     }
 
+    void bfs(){
+        vector<bool>visisted(V,false);
+        for(int i=0;i<V;i++){
+            if(!visisted[i]){
+                bfsHelper(i,visisted);
+                cout<<endl;
+            }
+
+        }
+    }
+
     void dfsHelper(int u, vector<bool> &vis){
         vis[u]=true;
         cout<<u<<" ";
@@ -68,7 +79,11 @@ class Graph{
 
     void dfs(){
         vector<bool> vis(7,false);
-        dfsHelper(0,vis);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                dfsHelper(i,vis);
+            }
+        }
         cout<<endl;
     }
 
