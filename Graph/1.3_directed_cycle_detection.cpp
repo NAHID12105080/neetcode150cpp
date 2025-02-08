@@ -73,7 +73,7 @@ class Graph{
               return;
          }
          visited[src]=true;
-         path+=to_string(src)+" ";
+         path+=to_string(src)+" ";//convert to string otherwise will add ascii value
          
          list<int>neighbors=l[src];
          for(int v:neighbors){
@@ -81,6 +81,7 @@ class Graph{
                 printAllPathsHelper(v,dest,visited,path);
               }
          }
+         //on backtracking(when we reach the end of the path) we need to remove the last node from the path
          path=path.substr(0,path.size()-1);
          visited[src]=false;
     }
@@ -104,7 +105,6 @@ int main(){
 
     cout<<graph.isCycleDir()<<endl;
     graph.printAllPaths(5,1);
- 
-  
+    
     return 0;
 }
