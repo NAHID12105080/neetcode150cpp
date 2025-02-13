@@ -3,7 +3,7 @@
 ## 🔥 Binary Search:
 
 - a divide-and-conquer technique
-- used to efficiently find an element in a `sorted array`
+- find an element in a `sorted array`
 - O(log N) time.
 
 ## 📌 Standard Binary Search Template
@@ -95,8 +95,8 @@ int upper_bound(vector<int>& arr, int target) {
 
 ### 🔥 Pro Tip:
 
-If ub - lb == 0, target does not exist in arr.
-ub - lb gives the frequency of target in arr.
+- If ub - lb == 0, target does not exist in arr.
+  ub - lb gives the frequency of target in arr.
 
 ### 🏆 Competitive Programming Hacks
 
