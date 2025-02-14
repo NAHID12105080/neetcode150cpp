@@ -5,7 +5,7 @@ const int N = 2e5 + 20;
 int n, a[N];
 //size of the array is too large (1e9); we use map instead of array
 map <int, int> dp;
-int ans, curr;
+int ans=0, curr;
 vector <int> vec;
 
 int main() {
@@ -14,6 +14,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> a[i];
         dp[a[i]] = max(dp[a[i]], dp[a[i] - 1] + 1);
+   // dp[a[i]]=dp[a[i]-1]+1; this also works as dp[a[i]] is always less than dp[a[i]+1]
         
         if (dp[a[i]] > ans) {
             ans = dp[a[i]];
@@ -25,8 +26,8 @@ int main() {
     
     for (int i = n - 1; i >= 0; i--) {
         if (a[i] == curr) {
-            curr--;
-            vec.push_back(i);
+            curr--;//decrementing the value of curr find the subsequence
+          vec.push_back(i);
         }
     }
     
