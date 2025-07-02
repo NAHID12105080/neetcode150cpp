@@ -1,35 +1,42 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-class Node {
-    public:
-    char data;//to store the character
-    unordered_map<char, Node*> children;//unordered_map is used to store the children of the node
-    bool terminal;//to check whether the node is the end of the word or not
+class Node
+{
+public:
+    char data;
+    unordered_map<char, Node *> children;
+    bool terminal;
 
-    Node(char data) {
+    Node(char data)
+    {
         this->data = data;
         terminal = false;
     }
 };
 
-class Trie{
-    public:
-    Node* root;
+class Trie
+{
+public:
+    Node *root;
 
-    public:
-    Trie() {
+    Trie()
+    {
         root = new Node('\0');
     }
 
-    void insert(string s) {
-        Node* temp = root;
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s[i];
-            if (temp->children.count(ch)) {//if the character is already present in the children of the node
+    void insert(const string &s)
+    {
+        Node *temp = root;
+        for (char ch : s)
+        {
+            if (temp->children.count(ch))
+            {
                 temp = temp->children[ch];
-            } else {
-                Node* n = new Node(ch);
+            }
+            else
+            {
+                Node *n = new Node(ch);
                 temp->children[ch] = n;
                 temp = n;
             }
@@ -37,52 +44,71 @@ class Trie{
         temp->terminal = true;
     }
 
-    bool find(string s) {
-        Node* temp = root;
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s[i];
-            if (temp->children.count(ch) == 0) {
+    bool find(const string &s)
+    {
+        Node *temp = root;
+        for (char ch : s)
+        {
+            if (temp->children.count(ch) == 0)
+            {
                 return false;
-            } else {
-                temp = temp->children[ch];
             }
+            temp = temp->children[ch];
         }
         return temp->terminal;
     }
 };
 
-//Time complexity: O(n^2). 2nd approach more advanced one
-bool wordBreak(string s, vector<string>& wordDict) {
+bool wordBreak(string s, vector<string> &wordDict)
+{
     Trie t;
-    for (string word : wordDict) {
+    for (const string &word : wordDict)
+    {
         t.insert(word);
     }
+
     int n = s.length();
     vector<bool> dp(n + 1, false);
     dp[n] = true;
-    for (int i = n - 1; i >= 0; i--) {
-        Node* temp = t.root;
-        for (int j = i; j < n; j++) {
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        Node *temp = t.root;
+        for (int j = i; j < n; j++)
+        {
             char ch = s[j];
-            if (temp->children.count(ch) == 0) {
+            if (temp->children.count(ch) == 0)
+            {
                 break;
-            } else {
-                temp = temp->children[ch];
-                if (temp->terminal && dp[j + 1]) {
-                    dp[i] = true;
-                    break;
-                }
+            }
+            temp = temp->children[ch];
+            if (temp->terminal && dp[j + 1])
+            {
+                dp[i] = true;
+                break;
             }
         }
     }
+
     return dp[0];
 }
 
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-int main(){
-   string s="ilove";
-    vector<string> wordDict={"i","love"};
-    cout<<wordBreak(s,wordDict);
+    string s = "ilove";
+    vector<string> wordDict = {"i", "love"};
+
+    if (wordBreak(s, wordDict))
+    {
+        cout << "Yes, the string can be segmented.\n";
+    }
+    else
+    {
+        cout << "No, the string cannot be segmented.\n";
+    }
 
     return 0;
 }
