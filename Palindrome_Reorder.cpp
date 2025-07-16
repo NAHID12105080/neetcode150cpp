@@ -8,9 +8,7 @@ int main()
     for (char c : s)
         cnt[c - 'A']++;
     int odd = 0, mid = -1;
-    for (int i = 0; i < 26; ++i)
-        if (cnt[i] % 2)
-            odd++, mid = i;
+
     // If more than one character has an odd count, a palindrome cannot be formed
     if (odd > 1)
     {
