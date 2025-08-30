@@ -11,13 +11,15 @@ signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-
+    cout.tie(NULL);
     int tc;
     cin >> tc;
     while (tc--)
     {
-        int n;
-        cin >> n;
-        cout << 2 * n << endl;
+        int x;
+        cin >> x;
+        string s = to_string(x);
+        sort(s.begin(), s.end());
+        cout << s[0] << endl;
     }
 }
