@@ -46,7 +46,7 @@ int main()
                 return sz;
             };
 
-            dfs(dfs, 1, 0);
+            dfs(dfs, 1, 1);
 
             return cuts > k;
         };
