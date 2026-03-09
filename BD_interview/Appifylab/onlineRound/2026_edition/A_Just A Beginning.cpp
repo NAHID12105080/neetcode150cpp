@@ -20,3 +20,12 @@ signed main() {
     (s=="yes")?cout<<"YES"<<endl:cout<<"NO"<<endl;
   }
 }
+
+// #include <algorithm>
+// #include <vector>
+
+// std::vector<int> source = {1, 2, 3, 4};
+// std::vector<int> dest(source.size()); // Must pre-size the destination or use back_inserter
+
+// std::transform(source.begin(), source.end(), dest.begin(),
+//                [](int x) { return x * 2; }); // Example using a lambda
